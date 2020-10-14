@@ -34,6 +34,9 @@ export default {
 
 		const orphanagesRepository = getRepository(Orphanage);
 
+		const requestImages = request.files as Express.Multer.File[];
+		const images = requestImages.map((image) => ({ path: image.filename }));
+
 		const orphanage = orphanagesRepository.create({
 			name,
 			latitude,
@@ -42,6 +45,7 @@ export default {
 			instructions,
 			opening_hours,
 			open_on_weekends,
+			images,
 		});
 
 		await orphanagesRepository.save(orphanage);
